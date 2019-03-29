@@ -12,7 +12,7 @@ namespace TinyPinyin
 {
     public class PinyinConverter
     {
-        public AhoCorasick           Tree         { get; } = new AhoCorasick();
+        public AhoCorasick           Tree         { get; }
         public ISegmentationSelector Selector     { get; }
         public IList<IPinyinDict>    Dictionaries { get; }
 
@@ -20,6 +20,12 @@ namespace TinyPinyin
         {
             Selector     = config.Selector;
             Dictionaries = config.Dictionaries.ToList();
+            Tree         = new AhoCorasick();
+
+            foreach (var dictionary in Dictionaries)
+            {
+                Tree.Add(dictionary.Phrases);
+            }
         }
 
         public String ToPinyin(String text, String separator = "")
@@ -47,8 +53,8 @@ namespace TinyPinyin
         public static Boolean IsChinese(Char character, out Int32 code)
         {
             code = 0;
-            return character                >= PinyinData.MinChar &&
-                   character                <= PinyinData.MaxChar &&
+            return character                         >= PinyinData.MinChar &&
+                   character                         <= PinyinData.MaxChar &&
                    (code = GetPinyinCode(character)) > 0 ||
                    character == PinyinData.Zero;
         }

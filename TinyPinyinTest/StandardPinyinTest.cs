@@ -38,7 +38,7 @@ namespace TinyPinyinTest
                 var generatedFromChar   = PinyinConverter.ToPinyin(character);
                 var generatedFromString = PinyinConverter.ToStandardPinyin(character.ToString());
 
-                TestContext.WriteLine($"Character: {character} / Pinyin: {standard[0]}");
+                TestContext.WriteLine($"Character: {character} / Pinyin: {generatedFromChar}");
 
                 Assert.AreEqual(standard[0], generatedFromChar);
                 Assert.AreEqual(standard[0], generatedFromString);
@@ -59,9 +59,9 @@ namespace TinyPinyinTest
                 var standard = cityNames.Map[name];
                 var generated = converter.ToPinyin(name);
 
-                TestContext.WriteLine($"Name: {name} / Pinyin: {standard}");
+                TestContext.WriteLine($"Name: {name} / Pinyin: {generated}");
 
-                Assert.AreEqual(standard, generated);
+                Assert.AreEqual(String.Join(String.Empty, standard), generated);
             }
         }
     }
